@@ -1,0 +1,21 @@
+{
+  "ruleId": "OR-002",
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "OR-002-compliant.json",
+      "expect": {
+        "ruleId": "OR-002",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "OR-002-unsafe.json",
+      "expect": {
+        "ruleId": "OR-002",
+        "count": 1
+      }
+    }
+  ]
+}

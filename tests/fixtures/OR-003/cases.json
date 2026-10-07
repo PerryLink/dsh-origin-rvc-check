@@ -1,0 +1,26 @@
+{
+  "ruleId": "OR-003",
+  "configure": {
+    "OR-003": {
+      "threshold": 40
+    }
+  },
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "OR-003-compliant.json",
+      "expect": {
+        "ruleId": "OR-003",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "OR-003-unsafe.json",
+      "expect": {
+        "ruleId": "OR-003",
+        "count": 1
+      }
+    }
+  ]
+}

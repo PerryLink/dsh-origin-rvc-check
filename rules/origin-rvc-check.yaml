@@ -1,0 +1,188 @@
+# 原产地区域价值成分核对 规则库
+#
+# 规则数据与代码分离：替换本文件即可切换规则集版本，无需改动 TypeScript。
+#
+# 条款引用纪律（由 shared/ruleset.ts 强制校验）：
+#   - 每条规则必须写全 document / number / clause / excerpt / kind / source，
+#     且 excerpt 必须是逐字摘录，不得改写。
+#   - kind: direct                       条款直接规定了所检查的要求
+#   - kind: derived-from-principle       条款未直接规定，仅能由原则性条款推论（severity 最多 warn）
+#   - kind: institutional-configuration 阈值出自本机构配置（severity 最多 info）
+#
+# ⚠️⚠️ 本规则库最重要的说明：**原产地规则是协定文本，不是国家标准，而且本规则库不假装引用了某个协定。**
+#   本插件核对的是"原产地判定台账"的**算术与自洽**：
+#     原产国是否填写、非原产材料价值与 FOB 是否可解析、
+#     区域价值成分是否等于 (FOB − VNM) ÷ FOB × 100、
+#     RVC 是否达到本机构配置的门槛、原产地标准是否在册、
+#     料件序号是否唯一、是否残留模板占位符。
+#   区域价值成分（RVC）与"完全获得""税则归类改变"等原产地标准**由各自由贸易协定的原产地规则规定**：
+#   RCEP、中国—东盟、中国—韩国等协定的门槛与计算方法各不相同（RVC 有 40%、30% 等档次，
+#   计算口径也有"扣减法""累加法"之分）。**核查未取得任何协定文本的逐字条文**，
+#   因此每条规则的 basis 都如实写明这一点，kind 一律 derived-from-principle（封顶 warn）。
+#
+# ⚠️⚠️ 另一条**必须保留**的边界：**本插件绝不判定货物是否具备原产资格、
+#   是否可以享受协定税率、原产地声明是否有效、是否构成原产地规避**。
+#   那需要海关依法定职权、按**具体协定**的原产地规则判断。
+#   → **RVC 门槛（rvcThreshold）与原产地标准清单（criteriaValues）都出厂为空**，
+#     未配置即进 skipped —— 因为门槛与标准完全取决于适用哪个协定。
+#   → 本插件也**不区分扣减法与累加法**：它按台账已写明的 RVC 与 FOB、VNM 做算术核对，
+#     口径是否正确需要使用者按协定确认。
+
+plugin: dsh-origin-rvc-check
+version: "2026.1"
+
+rules:
+  - id: OR-001
+    title: 台账应声明协定与产品并填写原产国
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于原产地判定的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: headerPresence
+          fields: ["agreement","product"]
+    note: >-
+      原产地判定**完全取决于适用哪个协定**：不写明协定名称与产品，
+      就无法判断该用哪一套门槛与计算方法。本次未取得明文条号，故封顶 warn。
+      配置项 agreement 对应协定名称，product 对应产品名称。
+      **另注**：明细行的"原产国"栏是否填写由 OR-004 负责，本条只核对表头。
+
+  - id: OR-002
+    title: 区域价值成分应符合定义式
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于区域价值成分计算的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: formula
+          resultField: rvc
+          expression: {"op":"percent","fields":["netValue","fob"]}
+          tolerance: 0.5
+          fix: RVC 应按协定规定的口径计算；本条核对 (FOB − 非原产材料价值) ÷ FOB × 100
+    note: >-
+      区域价值成分的**扣减法定义式**是 RVC = (FOB − VNM) ÷ FOB × 100，
+      属纯算术核对；本次未取得明文条号，故封顶 warn。
+      ⚠️ 两个必须知道的限制：
+      ① **本条按扣减法核对**。部分协定允许**累加法**（RVC = 区域成分价值 ÷ FOB × 100），
+         口径不同算出的数值不同；台账若按累加法填写，本条会报差异 —— 请改 expression 或停用本条。
+      ② 本条只在 FOB、VNM 与 RVC 都有可解析数值时执行；缺任一项即进 skipped。
+      **本条不判断该 RVC 数值是否足以取得原产资格** —— 那取决于协定门槛，见 OR-003。
+
+  - id: OR-003
+    title: 区域价值成分应达到本机构配置的门槛
+    severity: info
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于区域价值成分门槛的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: thresholdBelow
+          field: rvc
+          threshold: 0
+          fix: 核对适用协定的 RVC 门槛
+    note: >-
+      threshold 出厂为 0，表示**未配置**，本条进 skipped。
+      依据说明：**RVC 门槛随协定与产品而变**（例如 40%、30% 等档次，
+      同一协定下不同税目的门槛也可能不同），本插件**不硬编码任何门槛**。
+      配置示例：threshold: 40。
+      本条命中只表示"低于你配置的门槛"，**不表示该货物不具备原产资格** ——
+      因为原产资格还可以通过"完全获得""税则归类改变"等其他标准取得，
+      **RVC 只是其中一条路径**。这个区别至关重要，请务必按协定确认后再下结论。
+
+  - id: OR-004
+    title: 每条料件都应填写原产国
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于非原产材料判定的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: presence
+          field: origin
+          fix: 补填料件原产国；本条只核对是否填写，不判断该原产国是否正确
+    note: >-
+      非原产材料的价值是 RVC 计算的减项，而**判断哪些材料属于"非原产"必须先知道其原产国**。
+      本次未取得明文条号，故封顶 warn。
+      本条只核对原产国栏是否填写，**不判断该原产国申报是否真实、是否会影响原产资格**。
+
+  - id: OR-005
+    title: 原产地标准应使用本机构协定口径的取值
+    severity: info
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于原产地标准的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: enum
+          field: criteria
+          values: []
+    note: >-
+      values 出厂为空，表示**未配置**，本条进 skipped。
+      依据说明：原产地标准的名称与缩写随协定变化
+      （完全获得、完全生产、税则归类改变／CTC、区域价值成分／RVC、特定加工工序等），
+      本插件**不硬编码任何标准清单**。
+      本条只核对所填值是否在册，**不判断该批货物是否满足该标准**。
+
+  - id: OR-006
+    title: 料件序号不应在台账内重复
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于原产地判定的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: unique
+          field: itemNo
+    note: >-
+      序号唯一是"每项料件只被登记一次"的**前提条件**：
+      序号重复会让 VNM 合计重复计算，进而使 RVC 算错 —— **这是会直接导致错误结论的那类缺陷**。
+      本次未取得明文条号，故封顶 warn。比较时忽略空白字符。
+
+  - id: OR-007
+    title: 品名栏不应残留未替换的占位符
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于原产地判定的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: containsAny
+          field: description
+          terms: ["【","】","{{","}}","XXX","xxx","待填","待补充","TBD","todo","示例"]
+          fix: 品名应填写实际料件名称；残留占位符说明台账是照模板抄的
+    note: >-
+      台账若直接照抄模板，品名栏留下【】、XXX、待填、TBD 之类占位符时，
+      会让人误以为已经盘点了实际料件 —— **这会让 RVC 计算建立在不存在的料件清单上**。
+      本次未取得明文条号，故封顶 warn。terms 可按本机构模板调整。
+
+disabled: []
