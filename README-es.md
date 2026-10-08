@@ -1,4 +1,25 @@
-# dsh-origin-rvc-check
+# dsh-origin-rvc-check — Verificación del contenido de valor regional de un registro de determinación de origen
+
+`dsh-origin-rvc-check` lee un registro de determinación de origen (原产地判定台账) —la cabecera del acuerdo más una fila por material— y comprueba la aritmética de ese mismo registro: que se declaren el acuerdo y el producto, que el contenido de valor regional sea igual a (FOB − valor de los materiales no originarios) ÷ FOB × 100, que el RVC alcance el umbral que usted configura, que cada material indique su origen, que el criterio de origen proceda del vocabulario de su acuerdo, que los números de material no se repitan y que no quede ningún marcador de plantilla sin sustituir en la descripción.
+
+## Qué responde
+
+| Usted pregunta | Qué responde |
+|---|---|
+| La columna «区域价值成分» dice `70.00`, pero el «净价值» de la fila es `220` y el FOB de la cabecera es `400`. ¿Se detecta? | Sí. `OR-002` recalcula la fórmula de deducción (FOB − valor de los materiales no originarios) ÷ FOB × 100 a partir de la columna «净价值» y del FOB, con una tolerancia de 0,5 puntos, y señala la fila cuando el RVC declarado no coincide. Solo hace la aritmética y supone el método de deducción: un registro calculado por el método de acumulación se señala aunque su convención sea la correcta, así que cambie `expression` o desactive la regla. Si el RVC, el «净价值» o el FOB no se pueden leer como número, la regla se informa en `skipped` en lugar de pasar en silencio. |
+| No hay ningún umbral configurado y todas las filas pasaron. ¿Se comprobó el RVC? | No. `OR-003` trae `threshold: 0`, que significa sin configurar, así que la regla aparece en `skipped` en lugar de pasar en silencio. Ponga `threshold` en el valor de su acuerdo (por ejemplo `40`) y señalará cada fila cuyo RVC quede por debajo. Un hallazgo solo significa «por debajo del umbral que usted fijó», no que las mercancías no sean originarias: el origen también puede obtenerse por criterios de totalmente obtenido o de cambio de clasificación arancelaria, y el RVC es solo uno de los caminos. |
+| Una fila de material deja «原产国» en blanco. | `OR-004` señala toda fila en la que la columna «原产国» (origen) existe pero está vacía. Solo comprueba que la celda esté rellenada, no si el origen declarado es cierto ni si afecta a la condición de originario; cuando el material no trae ninguna columna de origen, la regla informa de que no se aplica en lugar de pasar en silencio. |
+| La columna «原产地标准» contiene un valor que no está en mi lista. | `OR-005` compara cada valor con la lista `values` del paquete. Esa lista viene vacía —los nombres y abreviaturas de los criterios cambian con cada acuerdo y el plugin no codifica ninguno— y entonces la regla se informa en `skipped`; rellene `values` con los criterios de su acuerdo (完全获得, CTC, RVC, 特定加工工序 …) y se señalará todo valor que no figure en ella. Solo comprueba que el valor esté en la lista, no que las mercancías cumplan ese criterio. |
+| El mismo «料件序号» aparece en dos filas. | `OR-006` señala un «料件序号» (itemNo) repetido, comparando los valores sin tener en cuenta los espacios. Una repetición cuenta dos veces el valor de los materiales no originarios y por tanto corrompe el RVC: es el tipo de defecto que lleva directamente a una conclusión equivocada. Informa de la repetición y no decide cuál de las dos filas está mal. |
+| La columna «品名» de una fila todavía dice `【待填】`. | `OR-007` señala toda fila cuyo «品名» (descripción) contenga alguno de los `terms` del paquete: 【, 】, `{{`, `}}`, XXX, xxx, 待填, 待补充, TBD, todo, 示例. Un registro copiado de una plantilla parece haber inventariado materiales reales, y el RVC acaba calculado sobre una lista de materiales que no existe. Solo busca los términos listados, así que un marcador que nadie incluyó pasa; `terms` se ajusta a su propia plantilla. |
+
+## Normas que sigue
+
+Este paquete de reglas no cita ninguna norma pública: la verificación no obtuvo el texto literal de las reglas de origen de ningún acuerdo de libre comercio, de modo que el `basis` de cada regla lo dice, todas son `derived-from-principle` y ninguna supera `warn` o `info`. En lo que sí se apoyan las comprobaciones es en la aritmética del propio registro y en el umbral de RVC y el vocabulario de criterios que usted configure para el acuerdo aplicable.
+
+| Documento | Número | Reglas que lo citan |
+|---|---|---|
+| 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007 |
 
 **Boundary:** this plugin checks an **原产地判定台账** for arithmetic — that the agreement and product are
 declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the

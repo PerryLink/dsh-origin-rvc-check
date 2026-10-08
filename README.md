@@ -1,4 +1,25 @@
-# dsh-origin-rvc-check
+# dsh-origin-rvc-check — Regional value content check for an origin determination register
+
+`dsh-origin-rvc-check` reads one origin determination register (原产地判定台账) — the agreement header plus one row per material — and checks that register's own arithmetic: that the agreement and product are declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the threshold you configure, that every material states its origin, that the origin criterion comes from your agreement's vocabulary, that material numbers are unique, and that no unreplaced placeholder survives in the description.
+
+## What it answers
+
+| You ask | What it answers |
+|---|---|
+| The 区域价值成分 column says `70.00`, but the row's 净价值 is `220` and the header's FOB is `400`. Is that caught? | Yes. `OR-002` recomputes the build-down formula (FOB − non-originating value) ÷ FOB × 100 from the 净价值 column and FOB, with a 0.5-point tolerance, and reports the row when the declared RVC differs. It does only the arithmetic, and it assumes the build-down method: a register filled in by the build-up method is reported although its own convention is right, so change `expression` or disable the rule. If the RVC, the 净价值 or the FOB cannot be read as a number, the rule reports itself in `skipped` instead of passing silently. |
+| No threshold is set anywhere, and every row passed. Did it check the RVC at all? | No. `OR-003` ships with `threshold: 0`, which means unconfigured, so the rule reports itself in `skipped` rather than passing silently. Set `threshold` to your agreement's figure (for example `40`) and it reports each row whose RVC falls below it. A finding means only “below the threshold you set” — not that the goods are not originating, because origin can also be earned through wholly-obtained or tariff-classification-change criteria; RVC is only one path. |
+| One material row leaves 原产国 blank. | `OR-004` reports every row whose 原产国 (origin) column is present but empty. It checks only that the cell is filled, not whether the declared origin is true or whether it affects origin status; when the material carries no origin column at all, the rule reports that it does not apply instead of passing silently. |
+| The 原产地标准 column holds a value that is not in my list. | `OR-005` compares each value with the pack's `values` list. That list ships empty — criterion names and abbreviations differ per agreement, so the plugin hard-codes none — and the rule then reports itself in `skipped`; fill `values` with your agreement's criteria (完全获得, CTC, RVC, 特定加工工序 …) and any value not on it is reported. It checks only that the value is on the list, not that the goods satisfy that criterion. |
+| The same 料件序号 appears on two rows. | `OR-006` reports a repeated 料件序号 (itemNo), comparing the values with whitespace ignored. A duplicate double-counts the non-originating material value and therefore corrupts the RVC — this is the kind of defect that leads straight to a wrong conclusion. It reports the repetition; which of the two rows is wrong is not something it decides. |
+| The 品名 column still reads `【待填】` for one material. | `OR-007` reports a row whose 品名 (description) contains any of the pack's `terms` — 【, 】, `{{`, `}}`, XXX, xxx, 待填, 待补充, TBD, todo, 示例. A register copied from a template looks as if the materials had been counted, and the RVC then rests on a list of materials that does not exist. Only the listed terms are looked for, so a placeholder nobody listed passes; `terms` follows your own template. |
+
+## Standards it follows
+
+This rule pack cites no public standard: the verification pass obtained no verbatim text from any free trade agreement's rules of origin, so every rule's `basis` says so, each is `derived-from-principle` and none rises above `warn` or `info`. What the checks rest on instead is the register's own arithmetic, plus the RVC threshold and the criterion vocabulary you configure for the agreement that applies.
+
+| Document | Number | Cited by rules |
+|---|---|---|
+| 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007 |
 
 **Boundary:** this plugin checks an **原产地判定台账** for arithmetic — that the agreement and product are
 declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the
