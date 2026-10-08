@@ -53,8 +53,7 @@ material — applies a versioned rule pack, and returns a report.
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./dsh-origin-rvc-check-0.1.0.tgz
+dsh plugin --profile <name> add dsh-origin-rvc-check
 dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
 ```
 

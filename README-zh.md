@@ -42,8 +42,7 @@ is valid, or whether origin circumvention occurred.
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./*.tgz
+dsh plugin --profile <name> add dsh-origin-rvc-check
 dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
 ```
 
