@@ -70,7 +70,6 @@ material — applies a versioned rule pack, and returns a report.
 | `OR-005` | the criterion comes from your vocabulary (off by default) | info | local |
 | `OR-006` | material numbers are unique | warn | principle |
 | `OR-007` | the description holds no unreplaced placeholder | warn | principle |
-
 ## Install
 
 ```sh
