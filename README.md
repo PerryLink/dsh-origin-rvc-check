@@ -1,6 +1,14 @@
 # dsh-origin-rvc-check — Regional value content check for an origin determination register
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-origin-rvc-check` reads one origin determination register (原产地判定台账) — the agreement header plus one row per material — and checks that register's own arithmetic: that the agreement and product are declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the threshold you configure, that every material states its origin, that the origin criterion comes from your agreement's vocabulary, that material numbers are unique, and that no unreplaced placeholder survives in the description.
+
+## What it looks like
+
+![Terminal demo of dsh-origin-rvc-check: real output over its OR-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-demo.png)
+
+Real output from this plugin over its own `OR-001` test fixture — not a mock-up. The rule pack ships no invented quotations, so a finding names both the clause it applied and the fact that the clause text was not obtained.
 
 ## What it answers
 
