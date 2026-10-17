@@ -4,6 +4,13 @@
 
 `dsh-origin-rvc-check` lê um registo de determinação de origem (原产地判定台账) —o cabeçalho do acordo mais uma linha por material— e verifica a aritmética desse próprio registo: que o acordo e o produto sejam declarados, que o conteúdo de valor regional seja igual a (FOB − valor dos materiais não originários) ÷ FOB × 100, que o RVC atinja o limiar que configura, que cada material indique a sua origem, que o critério de origem venha do vocabulário do seu acordo, que os números de material não se repitam e que não reste nenhum marcador de modelo por substituir na descrição.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-origin-rvc-check
+dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
+```
+
 ## Como é a saída
 
 ![Terminal demo of dsh-origin-rvc-check: real output over its OR-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-hero.png)
@@ -69,13 +76,6 @@ is valid, or whether origin circumvention occurred.
 ## What it does
 
 A tabela de regras, os campos e o comportamento detalhado estão em [README.md](README.md#what-it-does) (versão principal em inglês). O plugin apenas lista divergências literais frente às cláusulas citadas e indica em `skipped` cada verificação que não pôde ser executada.
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-origin-rvc-check
-dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
-```
 
 ## Configuration
 

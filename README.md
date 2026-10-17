@@ -4,6 +4,13 @@
 
 `dsh-origin-rvc-check` reads one origin determination register (原产地判定台账) — the agreement header plus one row per material — and checks that register's own arithmetic: that the agreement and product are declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the threshold you configure, that every material states its origin, that the origin criterion comes from your agreement's vocabulary, that material numbers are unique, and that no unreplaced placeholder survives in the description.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-origin-rvc-check
+dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
+```
+
 ## What it looks like
 
 ![Terminal demo of dsh-origin-rvc-check: real output over its OR-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-hero.png)
@@ -80,13 +87,6 @@ material — applies a versioned rule pack, and returns a report.
 | `OR-005` | the criterion comes from your vocabulary (off by default) | info | local |
 | `OR-006` | material numbers are unique | warn | principle |
 | `OR-007` | the description holds no unreplaced placeholder | warn | principle |
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-origin-rvc-check
-dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
-```
-
 ## Configuration
 
 | Key | Type | Default | Description |

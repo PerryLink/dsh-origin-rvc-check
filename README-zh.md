@@ -4,6 +4,13 @@
 
 `dsh-origin-rvc-check` 读取一份原产地判定台账——表头写明协定与产品，每种料件一行——核对这份台账自身的算术：协定与产品是否声明、区域价值成分是否等于 (FOB − 非原产材料价值) ÷ FOB × 100、RVC 是否达到你配置的门槛、每条料件是否填写原产国、原产地标准是否出自你所适用协定的口径、料件序号是否唯一、品名栏是否残留未替换的占位符。
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-origin-rvc-check
+dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
+```
+
 ## 实际输出长什么样
 
 ![Terminal demo of dsh-origin-rvc-check: real output over its OR-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-hero.png)
@@ -69,13 +76,6 @@ is valid, or whether origin circumvention occurred.
 ## What it does
 
 规则表、字段说明与行为细节见 [README.md](README.md#what-it-does)（英文主版本）。本插件只列出材料与所引条款之间的字面差异，并对无法执行的检查在 `skipped` 中逐项说明。
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-origin-rvc-check
-dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
-```
 
 ## Configuration
 
