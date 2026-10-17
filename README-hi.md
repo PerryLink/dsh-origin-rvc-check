@@ -6,7 +6,9 @@
 
 ## आउटपुट कैसा दिखता है
 
-![Terminal demo of dsh-origin-rvc-check: real output over its OR-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-demo.png)
+![Terminal demo of dsh-origin-rvc-check: real output over its OR-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-hero.png)
+
+![Animated terminal demo of dsh-origin-rvc-check](https://raw.githubusercontent.com/PerryLink/dsh-origin-rvc-check/main/docs/assets/dsh-origin-rvc-check-demo.gif)
 
 इस प्लगइन का अपने ही `OR-001` टेस्ट फ़िक्स्चर पर वास्तविक आउटपुट — कोई नकली चित्र नहीं। नियम-पैक उद्धरण नहीं गढ़ता, इसलिए हर निष्कर्ष लागू किए गए खंड का नाम और यह भी बताता है कि उसका मूल पाठ इस बार प्राप्त नहीं हुआ।
 
