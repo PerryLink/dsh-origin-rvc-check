@@ -1,5 +1,7 @@
 # dsh-origin-rvc-check — Verificación del contenido de valor regional de un registro de determinación de origen
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
 
 `dsh-origin-rvc-check` lee un registro de determinación de origen (原产地判定台账) —la cabecera del acuerdo más una fila por material— y comprueba la aritmética de ese mismo registro: que se declaren el acuerdo y el producto, que el contenido de valor regional sea igual a (FOB − valor de los materiales no originarios) ÷ FOB × 100, que el RVC alcance el umbral que usted configura, que cada material indique su origen, que el criterio de origen proceda del vocabulario de su acuerdo, que los números de material no se repitan y que no quede ningún marcador de plantilla sin sustituir en la descripción.
