@@ -42,24 +42,15 @@ dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
 
 **边界（中文译文，以英文原文为准）：** 本插件核对一份**原产地判定台账**的算术——是否声明协定与产品，区域价值成分是否等于（FOB − 非原产材料价值）÷ FOB × 100，RVC 是否达到你配置的门槛，每种材料是否写明其原产地，原产地标准是否取自你所适用协定的取值口径，材料编号是否唯一，以及是否残留占位符。它**不**判定货物是否具备原产资格、是否适用优惠税率、原产地声明是否有效，也不判定是否发生原产地规避。
 
-> ### ⚠️ Origin rules are treaty text, and this pack does not pretend to quote one
+> ### ⚠️ 原产地规则是条约文本，本规则库不假装引用其中任何一条（以英文原文为准）
 >
-> RVC and the other origin criteria — wholly obtained, change of tariff classification — are set by **each free
-> trade agreement's rules of origin**. RCEP, ASEAN–China, China–Korea and the rest differ in their thresholds
-> (40%, 30% and other tiers) and in their calculation methods. **The verification pass obtained no verbatim text
-> from any agreement**, so every rule's `basis` says exactly that and stays at `warn` or `info`.
+> RVC 以及其他原产地标准——完全获得、税则归类改变——由**各自由贸易协定自己的原产地规则**设定。RCEP、中国—东盟、中国—韩国等协定在阈值上（40%、30% 及其他档次）和计算方法上都各不相同。**核验环节没有从任何协定中取得逐字原文**，因此每条规则的 `basis` 都如实写明这一点，并停留在 `warn` 或 `info`。
 >
-> Three consequences are worth knowing before trusting a finding:
+> 在信任一项发现之前，有三点后果值得了解：
 >
-> - **`OR-002` assumes the build-down method** — RVC = (FOB − VNM) ÷ FOB × 100. Some agreements permit the
->   **build-up** method (regional value ÷ FOB × 100), which yields a different number for the same goods. A
->   register computed that way will report a difference; change `expression` or disable the rule. The check
->   reads FOB and the net value through a header fallback, so a figure stated once for the whole set is found.
-> - **`OR-003`'s threshold ships unset.** Thresholds vary by agreement *and* by tariff line, so the plugin
->   hard-codes none. A finding means "below the threshold you set", **not** "these goods are not originating" —
->   because origin can also be earned through wholly-obtained or tariff-classification-change criteria.
->   **RVC is only one path.** That distinction matters, and the rule's note states it.
-> - **`OR-005`'s criterion vocabulary ships empty**; criterion names and abbreviations differ per agreement.
+> - **`OR-002` 假定的是扣减法**——RVC = (FOB − VNM) ÷ FOB × 100。有些协定允许**累加法**（区域价值 ÷ FOB × 100），对同样的货物会得出不同的数值。按那种方法计算的台账会被报出差异；请修改 `expression` 或停用该规则。该项检查通过表头回退来读取 FOB 和净价值，因此整套数据只声明一次的数值也能被找到。
+> - **`OR-003` 的阈值出厂时未设定。** 阈值因协定*和*税则行而异，因此本插件不硬编码任何阈值。一项发现的意思是「低于你设定的阈值」，**而不是**「这些货物非原产」——因为原产地也可以通过完全获得或税则归类改变标准取得。**RVC 只是其中一条路径。** 这一区分很重要，该规则的说明也写明了它。
+> - **`OR-005` 的标准词表出厂为空**；标准名称和缩写因协定而异。
 
 ## Compatibility
 
