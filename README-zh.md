@@ -40,12 +40,7 @@ dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
 |---|---|---|
 | 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007 |
 
-**Boundary:** this plugin checks an **原产地判定台账** for arithmetic — that the agreement and product are
-declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the
-threshold you configure, that every material states its origin, that the origin criterion comes from your
-agreement's vocabulary, that material numbers are unique, and that no placeholder survives. It does **not**
-decide whether goods qualify as originating, whether a preferential rate applies, whether an origin declaration
-is valid, or whether origin circumvention occurred.
+**边界（中文译文，以英文原文为准）：** 本插件核对一份**原产地判定台账**的算术——是否声明协定与产品，区域价值成分是否等于（FOB − 非原产材料价值）÷ FOB × 100，RVC 是否达到你配置的门槛，每种材料是否写明其原产地，原产地标准是否取自你所适用协定的取值口径，材料编号是否唯一，以及是否残留占位符。它**不**判定货物是否具备原产资格、是否适用优惠税率、原产地声明是否有效，也不判定是否发生原产地规避。
 
 > ### ⚠️ Origin rules are treaty text, and this pack does not pretend to quote one
 >
