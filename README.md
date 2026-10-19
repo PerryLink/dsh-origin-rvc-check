@@ -28,6 +28,33 @@ dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
 
 The table below is the example set: the first row is the detailed walkthrough, the remaining rows are short cases.
 
+#### Detailed output
+
+**Tool** `origin_rvc_check`
+
+**Input**
+
+~~~json
+{"product":"某型电子元件","rows":[{"序号":"1","商品编号":"8541400000","品名":"某型电子元件","原产国":"日本","成交价格":"180","币制":"USD","非原产材料价值":"180","是否原产":"否","区域价值成分":"55.00","原产地标准":"RVC"}]}
+~~~
+ 
+**Output**
+
+~~~json
+{
+  "id": "dsh-origin-rvc-check.OR-001.811c9dc5",
+  "ruleId": "OR-001",
+  "severity": "warn",
+  "locator": {
+    "field": "agreement"
+  },
+  "found": "材料表头缺少 agreement",
+  "expected": "表头应提供 agreement、product"
+}
+~~~
+
+*Observed from `dsh-origin-rvc-check/tests/fixtures/OR-001/OR-001-unsafe.json`*
+
 | You ask | What it answers |
 |---|---|
 | The 区域价值成分 column says `70.00`, but the row's 净价值 is `220` and the header's FOB is `400`. Is that caught? | Yes. `OR-002` recomputes the build-down formula (FOB − non-originating value) ÷ FOB × 100 from the 净价值 column and FOB, with a 0.5-point tolerance, and reports the row when the declared RVC differs. It does only the arithmetic, and it assumes the build-down method: a register filled in by the build-up method is reported although its own convention is right, so change `expression` or disable the rule. If the RVC, the 净价值 or the FOB cannot be read as a number, the rule reports itself in `skipped` instead of passing silently. |

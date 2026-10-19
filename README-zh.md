@@ -30,6 +30,33 @@ dsh --profile <name> --dump-config | grep 'dsh-origin-rvc-check'
 下表是示例集：第一行是详细走查，其余行是简短案例。
 
 
+#### 详细输出
+
+**工具** `origin_rvc_check`
+
+**输入**
+
+~~~json
+{"product":"某型电子元件","rows":[{"序号":"1","商品编号":"8541400000","品名":"某型电子元件","原产国":"日本","成交价格":"180","币制":"USD","非原产材料价值":"180","是否原产":"否","区域价值成分":"55.00","原产地标准":"RVC"}]}
+~~~
+ 
+**输出**
+
+~~~json
+{
+  "id": "dsh-origin-rvc-check.OR-001.811c9dc5",
+  "ruleId": "OR-001",
+  "severity": "warn",
+  "locator": {
+    "field": "agreement"
+  },
+  "found": "材料表头缺少 agreement",
+  "expected": "表头应提供 agreement、product"
+}
+~~~
+
+*来源 `dsh-origin-rvc-check/tests/fixtures/OR-001/OR-001-unsafe.json`*
+
 | 你会问 | 它怎么答 |
 |---|---|
 | 「区域价值成分」栏填的是 `70.00`，但该行「净价值」是 `220`、表头 FOB 是 `400`，这种情况查得出来吗？ | 查得出来。`OR-002` 拿「净价值」栏与 FOB 按扣减法 (FOB − 非原产材料价值) ÷ FOB × 100 重算，容差 0.5 个百分点，填报值与之不符即逐行报出。它只做算术，而且按扣减法核对：台账若按累加法填写，即使口径本身正确也会被报出差异，此时请改 `expression` 或停用本条。RVC、净价值、FOB 有一项读不成数值时，本条报告「无法执行」，不会静默通过。 |

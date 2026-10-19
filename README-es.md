@@ -30,6 +30,33 @@ Salida real de este plugin sobre su propio fixture de prueba `OR-001` — no es 
 La tabla siguiente es el conjunto de ejemplos: la primera fila es el caso detallado y las demás son casos breves.
 
 
+#### Salida detallada
+
+**Herramienta** `origin_rvc_check`
+
+**Entrada**
+
+~~~json
+{"product":"某型电子元件","rows":[{"序号":"1","商品编号":"8541400000","品名":"某型电子元件","原产国":"日本","成交价格":"180","币制":"USD","非原产材料价值":"180","是否原产":"否","区域价值成分":"55.00","原产地标准":"RVC"}]}
+~~~
+ 
+**Salida**
+
+~~~json
+{
+  "id": "dsh-origin-rvc-check.OR-001.811c9dc5",
+  "ruleId": "OR-001",
+  "severity": "warn",
+  "locator": {
+    "field": "agreement"
+  },
+  "found": "材料表头缺少 agreement",
+  "expected": "表头应提供 agreement、product"
+}
+~~~
+
+*Observado en `dsh-origin-rvc-check/tests/fixtures/OR-001/OR-001-unsafe.json`*
+
 | Usted pregunta | Qué responde |
 |---|---|
 | La columna «区域价值成分» dice `70.00`, pero el «净价值» de la fila es `220` y el FOB de la cabecera es `400`. ¿Se detecta? | Sí. `OR-002` recalcula la fórmula de deducción (FOB − valor de los materiales no originarios) ÷ FOB × 100 a partir de la columna «净价值» y del FOB, con una tolerancia de 0,5 puntos, y señala la fila cuando el RVC declarado no coincide. Solo hace la aritmética y supone el método de deducción: un registro calculado por el método de acumulación se señala aunque su convención sea la correcta, así que cambie `expression` o desactive la regla. Si el RVC, el «净价值» o el FOB no se pueden leer como número, la regla se informa en `skipped` en lugar de pasar en silencio. |
