@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-origin-rvc-check?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-origin-rvc-check?ref=badge)
 
 `dsh-origin-rvc-check` lê um registo de determinação de origem (原产地判定台账) —o cabeçalho do acordo mais uma linha por material— e verifica a aritmética desse próprio registo: que o acordo e o produto sejam declarados, que o conteúdo de valor regional seja igual a (FOB − valor dos materiais não originários) ÷ FOB × 100, que o RVC atinja o limiar que configura, que cada material indique a sua origem, que o critério de origem venha do vocabulário do seu acordo, que os números de material não se repitam e que não reste nenhum marcador de modelo por substituir na descrição.
 

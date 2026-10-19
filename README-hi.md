@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-origin-rvc-check?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-origin-rvc-check?ref=badge)
 
 `dsh-origin-rvc-check` एक उद्गम-निर्धारण रजिस्टर (原产地判定台账) पढ़ता है — समझौते का हेडर और प्रत्येक सामग्री की एक पंक्ति — और उसी रजिस्टर के अपने अंकगणित की जाँच करता है: कि समझौता और उत्पाद घोषित हैं, कि क्षेत्रीय मूल्य-अंश (FOB − गैर-उद्गम सामग्री मूल्य) ÷ FOB × 100 के बराबर है, कि RVC आपकी निर्धारित सीमा तक पहुँचता है, कि प्रत्येक सामग्री अपना उद्गम बताती है, कि उद्गम मानदंड आपके समझौते की शब्दावली से आता है, कि सामग्री क्रमांक दोहराए नहीं गए हैं, और कि विवरण में कोई अप्रतिस्थापित प्लेसहोल्डर शेष नहीं है।
 

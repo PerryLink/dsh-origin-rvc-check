@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-origin-rvc-check?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-origin-rvc-check?ref=badge)
 
 `dsh-origin-rvc-check` 读取一份原产地判定台账——表头写明协定与产品，每种料件一行——核对这份台账自身的算术：协定与产品是否声明、区域价值成分是否等于 (FOB − 非原产材料价值) ÷ FOB × 100、RVC 是否达到你配置的门槛、每条料件是否填写原产国、原产地标准是否出自你所适用协定的口径、料件序号是否唯一、品名栏是否残留未替换的占位符。
 
