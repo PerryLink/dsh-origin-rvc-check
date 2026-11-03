@@ -1,6 +1,6 @@
 # dsh-origin-rvc-check — 原产地区域价值成分核对
 
-## 快速试跑（1 分钟）
+### 快速试跑（1 分钟）
 
 ```bash
 node samples/quickstart/run.mjs --check
