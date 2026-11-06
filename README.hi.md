@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-origin-rvc-check-flow-light.svg" width="100%" alt="dsh-origin-rvc-check डेटा प्रवाह: उद्गम-निर्धारण रजिस्टर (JSON/YAML) → parseMaterial → नियम-पैक OR-001…OR-007 → runCheck → रिपोर्ट (found/expected/fix + skipped); केवल अंतर, कोई निर्णय नहीं, मूल कभी नहीं बदलता">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-origin-rvc-check-hero-en-light.webp" width="100%" alt="dsh-origin-rvc-check: बाईं ओर प्लगइन का नाम और दो मूल्य-पंक्तियाँ; दाईं ओर RVC तराज़ू — बायाँ पलड़ा FOB − VNM = 400 − 180 = 220, दायाँ पलड़ा घोषित RVC × FOB = 70% × 400 = 280, 0.50 सहनशीलता से 15.00 प्रतिशत-बिंदु अधिक; नीचे OR-002 की अंतर-पट्टी और issues[] 1 / skipped[] 2, निर्णय समीक्षक के पास">
 </picture>
 
 # dsh-origin-rvc-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
 ## यह क्या है
 
 `dsh-origin-rvc-check` एक उद्गम-निर्धारण रजिस्टर (原产地判定台账) पढ़ता है — समझौते का हेडर और प्रत्येक सामग्री की एक पंक्ति — और उसी रजिस्टर के अपने अंकगणित की जाँच करता है: कि समझौता और उत्पाद घोषित हैं, कि क्षेत्रीय मूल्य-अंश (FOB − गैर-उद्गम सामग्री मूल्य) ÷ FOB × 100 के बराबर है, कि RVC आपकी निर्धारित सीमा तक पहुँचता है, कि प्रत्येक सामग्री अपना उद्गम बताती है, कि उद्गम मानदंड आपके समझौते की शब्दावली से आता है, कि सामग्री क्रमांक दोहराए नहीं गए हैं, और कि विवरण में कोई अप्रतिस्थापित प्लेसहोल्डर शेष नहीं है। आप मूल सामग्री सौंपते हैं (तालिका, रजिस्टर या दस्तावेज़; Excel को पहले JSON/YAML में बदला जा सकता है, चैट में भी यदि प्लेटफ़ॉर्म सहायता करे), और यह बताता है कि क्या असंगत है, कहाँ है और क्या सुधारना है। यह कोई अनुपालन निर्णय नहीं देता, कोई दायित्व नहीं ठहराता, समीक्षक का स्थान नहीं लेता और मूल दस्तावेज़ कभी नहीं बदलता।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check संरचना: ऊपर 2026.1 नियम-पैक की सात नियम (OR-001…OR-007) और उनकी निष्पादन स्थिति; बाएँ केवल-पढ़ने योग्य रजिस्टर (RCEP, FOB 400, पंक्ति 1 में घोषित RVC 70.00); बीच का सूत्र-द्वार netValue ÷ FOB × 100 = 55.00 की पुनर्गणना करता है, जो 0.50 सहनशीलता से 15.00 अधिक है, जबकि थ्रेशोल्ड 0 होने से OR-003 skipped में रहता है; दाएँ आधार के अनुसार गंभीरता-सीमा की सीढ़ी (derived-from-principle ≤ warn); नीचे issues[] 1 और skipped[] 2 (OR-003 थ्रेशोल्ड, OR-005 शब्दावली अनसेट), निर्णय समीक्षक के पास">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -293,7 +298,7 @@ node ../scripts/sync-shared.mjs dsh-origin-rvc-check   # ../_shared से src/s
 
 प्लगइन **डेटा-चालित** है: `src/model.ts` रजिस्टर का स्वरूप घोषित करता है, साझा किट पढ़ने वाला और जाँच इंजन देता है, और नियम-पैक हर जाँच घोषित करता है। अंतिम कमांड `../_shared` से साझा किट `src/shared/` में कॉपी करता है; हर साझा बदलाव के बाद इसे दोबारा चलाएँ।
 
-README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से प्रोग्रामेटिक रूप में बनती हैं और सुरक्षित रूप से दोबारा चलाई जा सकती हैं। इस प्लगइन में UI नहीं है, इसलिए hero हाथ से लिखा SVG प्रवाह आरेख है (हल्का और गहरा संस्करण, केवल कमांड-सतह टोकन)।
+README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से प्रोग्रामेटिक रूप में बनती हैं और सुरक्षित रूप से दोबारा चलाई जा सकती हैं। इस प्लगइन में UI नहीं है, इसलिए hero Pillow से बनाया गया RVC तराज़ू है (zh/en × हल्का/गहरा, चार फ़ाइलें) और संरचना-चित्र हाथ से लिखा SVG गणना-बेंच है (हल्का और गहरा संस्करण)।
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `origin`, `rvc`
 

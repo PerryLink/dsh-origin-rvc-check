@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-origin-rvc-check-flow-light.svg" width="100%" alt="dsh-origin-rvc-check 数据流：原产地判定台账（JSON/YAML）→ parseMaterial 读取 → OR-001…OR-007 规则包 → runCheck → 报告（found/expected/fix + skipped）；只列差异，不下结论，不改原件">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-origin-rvc-check-hero-zh-light.webp" width="100%" alt="dsh-origin-rvc-check 配图：左列是插件名与两行价值句；右侧是一台 RVC 天平——左盘 400 − 180 = 220（FOB − 非原产材料价值），右盘 70% × 400 = 280（填报 RVC × FOB），Δ 15.00 个百分点超过容差 0.50；下方是 OR-002 的差异条与 issues[] 1 / skipped[] 2，结论留给审核人">
 </picture>
 
 # dsh-origin-rvc-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
 ## 它是什么
 
 `dsh-origin-rvc-check` 读取一份原产地判定台账——表头写明协定与产品，每种料件一行——核对这份台账自身的算术：协定与产品是否声明、区域价值成分是否等于 (FOB − 非原产材料价值) ÷ FOB × 100、RVC 是否达到你配置的门槛、每条料件是否填写原产国、原产地标准是否出自你所适用协定的口径、料件序号是否唯一、品名栏是否残留未替换的占位符。你交出原始材料（表格、清单或文书；Excel 可先转成 JSON/YAML，对话里也能代转），它返回一份「哪一行、哪一栏、差什么」的差异清单。它不下合规结论、不认定责任、不替代审核人，也绝不修改原件。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check 结构图：上方规则包 2026.1 的七条规则（OR-001…OR-007）与执行状态；左栏为只读台账，表头 RCEP / FOB 400，行内区域价值成分填报 70.00；中栏算式闸门按净价值 ÷ FOB × 100 重算得 55.00，Δ 15.00 超过容差 0.50，门槛 0 未配置故 OR-003 进 skipped；右栏是加载期依据封顶阶梯（derived-from-principle ≤ warn）；底部 issues[] 1 条与 skipped[] 2 条（OR-003 门槛、OR-005 词表未配置），结论留给审核人">
+</picture>
 
 ## 三步上手
 
@@ -293,7 +298,7 @@ node ../scripts/sync-shared.mjs dsh-origin-rvc-check   # 从 ../_shared 刷新 s
 
 插件是**数据驱动**的：`src/model.ts` 声明台账形态，共享件提供读取器与检查引擎，规则包声明每一项检查。最后一条命令把 `../_shared` 的共享件同步进 `src/shared/`；每次改动共享件后都要重跑。
 
-README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行；本插件无 UI，hero 为手绘 SVG 流程图（深浅双版，图内仅命令面 token）。
+README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行；本插件无 UI，hero 为 Pillow 绘制的「RVC 天平」图（中英 × 深浅四版），结构图为手绘 SVG 核算台（深浅双版）。
 
 Topics：`dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `origin`, `rvc`
 

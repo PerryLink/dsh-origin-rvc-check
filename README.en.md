@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-origin-rvc-check-flow-light.svg" width="100%" alt="dsh-origin-rvc-check data flow: origin determination register (JSON/YAML) → parseMaterial → rule pack OR-001…OR-007 → runCheck → report (found/expected/fix + skipped); differences only, no verdict, the original is never modified">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-origin-rvc-check-hero-en-light.webp" width="100%" alt="dsh-origin-rvc-check: the plugin name and two value lines on the left; on the right an RVC balance — left pan FOB − VNM = 400 − 180 = 220, right pan declared RVC × FOB = 70% × 400 = 280, a 15.00 percentage-point gap above the 0.50 tolerance; below it the OR-002 finding strip and issues[] 1 / skipped[] 2, with the verdict left to the reviewer">
 </picture>
 
 # dsh-origin-rvc-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
 ## What it is
 
 `dsh-origin-rvc-check` reads one origin determination register — the agreement header plus one row per material — and checks that register's own arithmetic: that the agreement and product are declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the threshold you configure, that every material states its origin, that the origin criterion comes from your agreement's vocabulary, that material numbers are unique, and that no unreplaced placeholder survives in the description. You hand over the source material (a table, register or document; Excel can be converted to JSON/YAML first, in chat if the platform supports it), and it returns a list of what is inconsistent, where, and what to fix. It makes no compliance verdict and assigns no liability, replaces no reviewer, and never modifies the original.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check structure: the 2026.1 rule pack with seven rules (OR-001…OR-007) and their run status; the left card is the read-only register (RCEP, FOB 400, row 1 declared RVC 70.00); the centre formula gate recomputes netValue ÷ FOB × 100 = 55.00, a 15.00 gap over the 0.50 tolerance, while threshold 0 leaves OR-003 in skipped; the right card is the load-time severity staircase (derived-from-principle ≤ warn); the bottom band is issues[] 1 and skipped[] 2 (OR-003 threshold, OR-005 vocabulary unset), with the verdict left to the reviewer">
+</picture>
 
 ## Three-step setup
 
@@ -314,7 +319,7 @@ node ../scripts/sync-shared.mjs dsh-origin-rvc-check   # refresh src/shared from
 
 The plugin is **data-driven**: `src/model.ts` declares the register shape, the shared kit supplies the reader and the check engine, and the rule pack declares every check. The last command copies the shared kit from `../_shared` into `src/shared/`; re-run it after every shared-kit change.
 
-README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and are safe to re-run. This plugin has no UI, so the hero is a hand-written SVG flow diagram (light and dark versions, command-surface tokens only).
+README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and are safe to re-run. This plugin has no UI, so the hero is a Pillow-drawn RVC balance (zh/en × light/dark, four files) and the structure figure is a hand-written SVG calculation workbench (light and dark versions).
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `origin`, `rvc`
 

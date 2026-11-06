@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-origin-rvc-check-flow-light.svg" width="100%" alt="Fluxo de dados do dsh-origin-rvc-check: registo de determinação de origem (JSON/YAML) → parseMaterial → pacote de regras OR-001…OR-007 → runCheck → relatório (found/expected/fix + skipped); apenas diferenças, sem veredicto, o original nunca é alterado">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-origin-rvc-check-hero-en-light.webp" width="100%" alt="dsh-origin-rvc-check: à esquerda o nome e duas frases de valor; à direita uma balança do RVC — prato esquerdo FOB − VNM = 400 − 180 = 220, prato direito RVC declarado × FOB = 70% × 400 = 280, uma diferença de 15,00 pontos percentuais acima da tolerância de 0,50; abaixo, a faixa do achado OR-002 e issues[] 1 / skipped[] 2, com o veredito nas mãos do revisor">
 </picture>
 
 # dsh-origin-rvc-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
 ## O que é
 
 O `dsh-origin-rvc-check` lê um registo de determinação de origem (原产地判定台账) —o cabeçalho do acordo mais uma linha por material— e verifica a aritmética desse próprio registo: que o acordo e o produto sejam declarados, que o conteúdo de valor regional seja igual a (FOB − valor dos materiais não originários) ÷ FOB × 100, que o RVC atinja o limiar que configura, que cada material indique a sua origem, que o critério de origem venha do vocabulário do seu acordo, que os números de material não se repitam e que não reste nenhum marcador de modelo por substituir na descrição. Entrega o material original (uma tabela, um registo ou um documento; o Excel pode ser convertido antes para JSON/YAML, até no chat se a plataforma o permitir) e recebe uma lista do que é inconsistente, onde e o que corrigir. Não emite juízo de conformidade nem atribui responsabilidade, não substitui o revisor e nunca altera o original.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check estrutura: em cima o pacote de regras 2026.1 com sete regras (OR-001…OR-007) e o respetivo estado de execução; à esquerda o registo só de leitura (RCEP, FOB 400, linha 1 com RVC declarado 70.00); ao centro a porta da fórmula recalcula netValue ÷ FOB × 100 = 55.00, uma diferença de 15.00 acima da tolerância de 0.50, enquanto o limiar 0 deixa OR-003 em skipped; à direita a escada de tetos de gravidade segundo a base (derived-from-principle ≤ warn); em baixo as duas vias issues[] 1 e skipped[] 2 (OR-003 limiar, OR-005 vocabulário por configurar), com o veredito nas mãos do revisor">
+</picture>
 
 ## Instalação em três passos
 
@@ -293,7 +298,7 @@ node ../scripts/sync-shared.mjs dsh-origin-rvc-check   # atualizar src/shared a 
 
 O plugin é **orientado por dados**: `src/model.ts` declara a forma do registo, o kit partilhado fornece o leitor e o motor de verificação, e o pacote de regras declara cada verificação. O último comando copia o kit partilhado de `../_shared` para `src/shared/`; volte a executá-lo após cada alteração do kit partilhado.
 
-As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) e podem ser reexecutadas sem risco. Este plugin não tem UI, pelo que o hero é um diagrama de fluxo SVG desenhado à mão (versões clara e escura, apenas tokens da superfície de comandos).
+As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) e podem ser reexecutadas sem risco. Este plugin não tem UI, pelo que o hero é uma balança do RVC desenhada com Pillow (zh/en × clara/escura, quatro ficheiros) e a figura de estrutura é uma bancada de cálculo SVG desenhada à mão (versões clara e escura).
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `origin`, `rvc`
 

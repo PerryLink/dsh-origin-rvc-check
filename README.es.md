@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-origin-rvc-check-flow-light.svg" width="100%" alt="Flujo de datos de dsh-origin-rvc-check: registro de determinación de origen (JSON/YAML) → parseMaterial → paquete de reglas OR-001…OR-007 → runCheck → informe (found/expected/fix + skipped); solo diferencias, sin veredicto, el original nunca se modifica">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-origin-rvc-check-hero-en-light.webp" width="100%" alt="dsh-origin-rvc-check: a la izquierda el nombre y dos frases de valor; a la derecha una balanza del RVC — platillo izquierdo FOB − VNM = 400 − 180 = 220, platillo derecho RVC declarado × FOB = 70% × 400 = 280, una diferencia de 15,00 puntos porcentuales sobre la tolerancia de 0,50; debajo, la tira del hallazgo OR-002 y issues[] 1 / skipped[] 2, con el veredicto en manos del revisor">
 </picture>
 
 # dsh-origin-rvc-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
 ## Qué es
 
 `dsh-origin-rvc-check` lee un registro de determinación de origen (原产地判定台账) —la cabecera del acuerdo más una fila por material— y comprueba la aritmética de ese mismo registro: que se declaren el acuerdo y el producto, que el contenido de valor regional sea igual a (FOB − valor de los materiales no originarios) ÷ FOB × 100, que el RVC alcance el umbral que usted configura, que cada material indique su origen, que el criterio de origen proceda del vocabulario de su acuerdo, que los números de material no se repitan y que no quede ningún marcador de plantilla sin sustituir en la descripción. Usted entrega el material original (una tabla, un registro o un documento; Excel puede convertirse antes a JSON/YAML, incluso en el chat si la plataforma lo permite) y recibe una lista de qué es inconsistente, dónde y qué corregir. No emite juicio de cumplimiento ni atribuye responsabilidad, no sustituye al revisor y nunca modifica el original.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-origin-rvc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check estructura: arriba el paquete de reglas 2026.1 con siete reglas (OR-001…OR-007) y su estado de ejecución; a la izquierda el registro de solo lectura (RCEP, FOB 400, fila 1 con RVC declarado 70.00); en el centro la puerta de la fórmula recalcula netValue ÷ FOB × 100 = 55.00, una diferencia de 15.00 sobre la tolerancia de 0.50, mientras que el umbral 0 deja OR-003 en skipped; a la derecha la escalera de topes de gravedad según la base (derived-from-principle ≤ warn); abajo las dos vías issues[] 1 y skipped[] 2 (OR-003 umbral, OR-005 vocabulario sin configurar), con el veredicto en manos del revisor">
+</picture>
 
 ## Instalación en tres pasos
 
@@ -293,7 +298,7 @@ node ../scripts/sync-shared.mjs dsh-origin-rvc-check   # refrescar src/shared de
 
 El plugin es **guiado por datos**: `src/model.ts` declara la forma del registro, el kit compartido aporta el lector y el motor de comprobación, y el paquete de reglas declara cada comprobación. El último comando copia el kit compartido de `../_shared` a `src/shared/`; vuelva a ejecutarlo tras cada cambio del kit compartido.
 
-Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) y se pueden reejecutar sin riesgo. Este plugin no tiene UI, así que el hero es un diagrama de flujo SVG dibujado a mano (versiones clara y oscura, solo tokens de la superficie de comandos).
+Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) y se pueden reejecutar sin riesgo. Este plugin no tiene UI, así que el hero es una balanza del RVC dibujada con Pillow (zh/en × clara/oscura, cuatro archivos) y la figura de estructura es un banco de cálculo SVG dibujado a mano (versiones clara y oscura).
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`, `origin`, `rvc`
 
