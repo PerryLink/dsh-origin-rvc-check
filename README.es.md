@@ -98,7 +98,7 @@ El plugin registra la herramienta `origin_rvc_check`: lee un registro de origen 
 - **Las citas deben ser literales** — cada regla lleva documento, número, cláusula, extracto y fuente; cuando el extracto tiene menos de ocho caracteres o el texto exacto no se obtuvo, el extracto lo dice y la regla se marca `derived-from-principle`: nunca se disfraza una paráfrasis de cita.
 
 ```text
-registro de origen (acuerdo · producto · filas de material) ──origin_rvc_check──▶ paquete OR-001…OR-007 ──▶ informe (findings + skipped)
+registro de origen (acuerdo · producto · filas de material) ──origin_rvc_check──▶ paquete OR-001…OR-009 ──▶ informe (findings + skipped)
         ▲                                                                                                          │
         └──────────────────────────────────── el original nunca se modifica ──────────────────────────────────────┘
 ```
@@ -114,6 +114,8 @@ registro de origen (acuerdo · producto · filas de material) ──origin_rvc_c
 | `OR-005` | el criterio procede de su vocabulario (desactivada por defecto) | info | local |
 | `OR-006` | los números de material no se repiten | warn | principio |
 | `OR-007` | la descripción no contiene marcadores sin sustituir | warn | principio |
+| `OR-008` | todo material registrado como originario cita la declaración de su proveedor | warn | principio |
+| `OR-009` | la declaración del proveedor seguía vigente en la fecha de declaración | warn | principio |
 
 ### Ejemplos
 
@@ -215,7 +217,7 @@ Este paquete de reglas no cita ninguna norma pública: la verificación no obtuv
 
 | Documento | Número | Reglas que lo citan |
 |---|---|---|
-| 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007 |
+| 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007, OR-008, OR-009 |
 
 **Límite:** este plugin comprueba la aritmética de un **registro de determinación de origen** (原产地判定台账) —que se declaren el acuerdo y el producto, que el contenido de valor regional sea igual a (FOB − valor no originario) ÷ FOB × 100, que el RVC alcance el umbral configurado, que cada material indique su origen, que el criterio de origen proceda del vocabulario de su acuerdo, que los números de material no se repitan y que no quede ningún marcador. **No** decide si las mercancías califican como originarias, si se aplica un tipo preferencial, si una declaración de origen es válida ni si hubo elusión de origen.
 

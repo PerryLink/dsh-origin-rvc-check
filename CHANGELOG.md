@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- `OR-008`: a material row recorded as originating (`是否原产` = 是/Y/yes/原产) must cite the supplier declaration that supports it (new column `供应商声明编号` / `declarationNo`). Checks presence only; it does not judge whether the declaration is genuine or covers the item.
+- `OR-009`: when a row gives both `声明有效期至` (`declarationValidUntil`) and `申报日期`, the declaration must still be valid on the declaration date. Compares the two dates only; it does not judge the validity period against the agreement's limit.
+- Paired fixtures for both rules; rule tables in all five READMEs.
+
 ## [0.2.9] - 2026-10-18
 
 ### Changed

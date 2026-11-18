@@ -98,7 +98,7 @@ The plugin registers the `origin_rvc_check` tool: it reads one origin register (
 - **Citations must be verbatim** — every rule carries document, number, clause, excerpt and source; when an excerpt under eight characters or the exact text could not be obtained, the excerpt says so and the rule is marked `derived-from-principle` — a paraphrase is never dressed up as a quotation.
 
 ```text
-origin register (agreement · product · material rows) ──origin_rvc_check──▶ rule pack OR-001…OR-007 ──▶ report (findings + skipped)
+origin register (agreement · product · material rows) ──origin_rvc_check──▶ rule pack OR-001…OR-009 ──▶ report (findings + skipped)
         ▲                                                                                                        │
         └─────────────────────────────────────── the original is never modified ───────────────────────────────┘
 ```
@@ -114,6 +114,8 @@ origin register (agreement · product · material rows) ──origin_rvc_check�
 | `OR-005` | the criterion comes from your vocabulary (off by default) | info | local |
 | `OR-006` | material numbers are unique | warn | principle |
 | `OR-007` | the description holds no unreplaced placeholder | warn | principle |
+| `OR-008` | every material recorded as originating cites its supplier declaration | warn | principle |
+| `OR-009` | the supplier declaration was still valid on the declaration date | warn | principle |
 
 ### Examples
 
@@ -215,7 +217,7 @@ This rule pack cites no public standard: the verification pass obtained no verba
 
 | Document | Number | Cited by rules |
 |---|---|---|
-| Rules of origin of the free trade agreements (agreement text, not obtained in this pass) | current agreement version, not verified in this pass | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007 |
+| Rules of origin of the free trade agreements (agreement text, not obtained in this pass) | current agreement version, not verified in this pass | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007, OR-008, OR-009 |
 
 **Boundary:** this plugin checks an **origin determination register** for arithmetic — that the agreement and product are
 declared, that regional value content equals (FOB − non-originating value) ÷ FOB × 100, that RVC meets the

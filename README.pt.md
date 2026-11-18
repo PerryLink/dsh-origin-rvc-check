@@ -98,7 +98,7 @@ O plugin registra a ferramenta `origin_rvc_check`: lê um registo de origem (cab
 - **As citações têm de ser literais** — cada regra traz documento, número, cláusula, trecho e fonte; quando o trecho tem menos de oito caracteres ou o texto exato não foi obtido, o trecho di-lo e a regra é marcada `derived-from-principle`: nunca se disfarça uma paráfrase de citação.
 
 ```text
-registo de origem (acordo · produto · linhas de material) ──origin_rvc_check──▶ pacote OR-001…OR-007 ──▶ relatório (findings + skipped)
+registo de origem (acordo · produto · linhas de material) ──origin_rvc_check──▶ pacote OR-001…OR-009 ──▶ relatório (findings + skipped)
         ▲                                                                                                        │
         └────────────────────────────────────── o original nunca é alterado ───────────────────────────────────┘
 ```
@@ -114,6 +114,8 @@ registo de origem (acordo · produto · linhas de material) ──origin_rvc_che
 | `OR-005` | o critério vem do seu vocabulário (desativada por omissão) | info | local |
 | `OR-006` | os números de material não se repetem | warn | princípio |
 | `OR-007` | a descrição não contém marcadores por substituir | warn | princípio |
+| `OR-008` | cada material registado como originário cita a declaração do fornecedor | warn | princípio |
+| `OR-009` | a declaração do fornecedor ainda era válida na data de declaração | warn | princípio |
 
 ### Exemplos
 
@@ -215,7 +217,7 @@ Este pacote de regras não cita nenhuma norma pública: a verificação não obt
 
 | Documento | Número | Regras que o citam |
 |---|---|---|
-| 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007 |
+| 各自由贸易协定原产地规则（协定文本，本次未取得） | 现行协定版本本次未核实 | OR-001, OR-002, OR-003, OR-004, OR-005, OR-006, OR-007, OR-008, OR-009 |
 
 **Limite:** este plugin verifica a aritmética de um **registo de determinação de origem** (原产地判定台账) —que o acordo e o produto sejam declarados, que o conteúdo de valor regional seja igual a (FOB − valor não originário) ÷ FOB × 100, que o RVC atinja o limiar configurado, que cada material indique a sua origem, que o critério de origem venha do vocabulário do seu acordo, que os números de material não se repitam e que não reste nenhum marcador. **Não** decide se as mercadorias qualificam como originárias, se se aplica uma taxa preferencial, se uma declaração de origem é válida nem se houve elisão de origem.
 
