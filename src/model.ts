@@ -37,6 +37,15 @@ const COLUMNS = {
   rvc: ['区域价值成分', 'RVC', '增值率', 'rvc'],
   criteria: ['原产地标准', '原产地判据', '标准', 'criteria'],
   certNo: ['原产地证书号', '证书编号', 'certNo'],
+  /**
+   * The supplier's declaration backing a material recorded as originating.
+   *
+   * A material counts as originating only on evidence from its supplier; the
+   * declaration reference and its validity end date let OR-008 and OR-009 check
+   * that the register cites that evidence and that it covered the declaration date.
+   */
+  declarationNo: ['供应商声明编号', '供应商原产地声明', '声明编号', 'supplierDeclarationNo', 'declarationNo'],
+  declarationValidUntil: ['声明有效期至', '声明截止日期', 'declarationValidUntil'],
   declaredAt: ['申报日期', '日期', 'declaredAt'],
   note: ['备注', '说明', 'note', 'remark'],
 } as const

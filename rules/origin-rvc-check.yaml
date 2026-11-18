@@ -185,4 +185,53 @@ rules:
       会让人误以为已经盘点了实际料件 —— **这会让 RVC 计算建立在不存在的料件清单上**。
       本次未取得明文条号，故封顶 warn。terms 可按本机构模板调整。
 
+  - id: OR-008
+    title: 记为原产的料件应注明供应商声明编号
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于原产材料证明的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: conditionalPresence
+          conditionField: isOriginating
+          conditionValues: ["是","Y","y","Yes","yes","YES","true","原产"]
+          requiredFields: ["declarationNo"]
+          fix: 补填该料件所依据的供应商声明编号；本条只核对是否注明，不判断该声明是否真实有效
+    note: >-
+      料件记为"原产"后，其价值不计入非原产材料价值（VNM），会直接抬高 RVC；
+      而料件的原产资格通常要靠**供应商出具的原产地声明**（或协定认可的其他证明）支持。
+      台账若只写"是否原产：是"而不注明所依据的声明，复核时就无从追溯。
+      本次未取得明文条号，故封顶 warn。
+      conditionValues 可按本机构台账的写法调整。
+      **本条不判断该声明是否真实、是否覆盖该料件的税号、是否由有权出具的主体签发** ——
+      这些需要按具体协定逐份核对声明原件。
+
+  - id: OR-009
+    title: 供应商声明的有效期应覆盖申报日期
+    severity: warn
+    basis:
+      document: 各自由贸易协定原产地规则（协定文本，本次未取得）
+      number: 现行协定版本本次未核实
+      clause: 关于供应商长期声明有效期的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: http://www.customs.gov.cn/
+    params:
+        check:
+          kind: fieldComparison
+          leftField: declarationValidUntil
+          rightField: declaredAt
+          relation: gte
+    note: >-
+      供应商长期声明只覆盖其有效期内发运的货物。
+      申报日期晚于声明有效期截止日时，该料件的原产依据可能已经失效，RVC 计算随之失去支撑。
+      本次未取得明文条号，故封顶 warn。
+      本条只在"声明有效期至"与"申报日期"都已填写时执行；缺任一项即进 skipped。
+      **本条只比较两个日期，不判断有效期本身是否符合协定上限**（各协定对长期声明期限的规定不同）。
+
 disabled: []
