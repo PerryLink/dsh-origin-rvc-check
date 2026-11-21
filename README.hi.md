@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
   <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check संरचना: ऊपर 2026.1 नियम-पैक की सात नियम (OR-001…OR-007) और उनकी निष्पादन स्थिति; बाएँ केवल-पढ़ने योग्य रजिस्टर (RCEP, FOB 400, पंक्ति 1 में घोषित RVC 70.00); बीच का सूत्र-द्वार netValue ÷ FOB × 100 = 55.00 की पुनर्गणना करता है, जो 0.50 सहनशीलता से 15.00 अधिक है, जबकि थ्रेशोल्ड 0 होने से OR-003 skipped में रहता है; दाएँ आधार के अनुसार गंभीरता-सीमा की सीढ़ी (derived-from-principle ≤ warn); नीचे issues[] 1 और skipped[] 2 (OR-003 थ्रेशोल्ड, OR-005 शब्दावली अनसेट), निर्णय समीक्षक के पास">
 </picture>
 
+![dsh-origin-rvc-check का असली टर्मिनल रन](docs/assets/dsh-origin-rvc-check-demo.gif)
+
+*इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
+
+
 ## तीन चरणों में शुरुआत
 
 1. **इंस्टॉल करें**:

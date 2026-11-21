@@ -43,6 +43,11 @@ O `dsh-origin-rvc-check` lê um registo de determinação de origem (原产地�
   <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check estrutura: em cima o pacote de regras 2026.1 com sete regras (OR-001…OR-007) e o respetivo estado de execução; à esquerda o registo só de leitura (RCEP, FOB 400, linha 1 com RVC declarado 70.00); ao centro a porta da fórmula recalcula netValue ÷ FOB × 100 = 55.00, uma diferença de 15.00 acima da tolerância de 0.50, enquanto o limiar 0 deixa OR-003 em skipped; à direita a escada de tetos de gravidade segundo a base (derived-from-principle ≤ warn); em baixo as duas vias issues[] 1 e skipped[] 2 (OR-003 limiar, OR-005 vocabulário por configurar), com o veredito nas mãos do revisor">
 </picture>
 
+![dsh-origin-rvc-check: execução real de terminal](docs/assets/dsh-origin-rvc-check-demo.gif)
+
+*Repetição animada de uma execução real registrada neste repositório.*
+
+
 ## Instalação em três passos
 
 1. **Instale**:

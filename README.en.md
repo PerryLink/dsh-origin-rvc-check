@@ -117,6 +117,10 @@ origin register (agreement · product · material rows) ──origin_rvc_check�
 
 ### Examples
 
+![dsh-origin-rvc-check: real terminal run](docs/assets/dsh-origin-rvc-check-demo.gif)
+
+*Animated replay of a real run recorded in this repository.*
+
 These are the plugin's real entry points; install once, then call one.
 
 **Detailed output** — tool `origin_rvc_check`, input:

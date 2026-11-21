@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
   <img src="docs/assets/dsh-origin-rvc-check-flow-v5-light.svg" width="100%" alt="dsh-origin-rvc-check estructura: arriba el paquete de reglas 2026.1 con siete reglas (OR-001…OR-007) y su estado de ejecución; a la izquierda el registro de solo lectura (RCEP, FOB 400, fila 1 con RVC declarado 70.00); en el centro la puerta de la fórmula recalcula netValue ÷ FOB × 100 = 55.00, una diferencia de 15.00 sobre la tolerancia de 0.50, mientras que el umbral 0 deja OR-003 en skipped; a la derecha la escalera de topes de gravedad según la base (derived-from-principle ≤ warn); abajo las dos vías issues[] 1 y skipped[] 2 (OR-003 umbral, OR-005 vocabulario sin configurar), con el veredicto en manos del revisor">
 </picture>
 
+![dsh-origin-rvc-check: ejecución real de terminal](docs/assets/dsh-origin-rvc-check-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 ## Instalación en tres pasos
 
 1. **Instale**:
