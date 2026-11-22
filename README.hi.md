@@ -11,6 +11,8 @@
 
 उद्गम-प्रमाणपत्र और सीमा-शुल्क कर्मियों के लिए DeepSeek Harness जाँच प्लगइन: नियम-पैक कोई उद्धरण नहीं गढ़ता, केवल वे अंतर सूचीबद्ध करता है जो रजिस्टर स्वयं यांत्रिक रूप से तय कर सकता है, कोई अनुपालन निर्णय नहीं देता, कोई दायित्व नहीं ठहराता, और मूल दस्तावेज़ कभी नहीं बदलता।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [इंस्टॉल](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -46,7 +48,6 @@ dsh plugin --profile <name> add dsh-origin-rvc-check
 ![dsh-origin-rvc-check का असली टर्मिनल रन](docs/assets/dsh-origin-rvc-check-demo.gif)
 
 *इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
-
 
 ## तीन चरणों में शुरुआत
 
