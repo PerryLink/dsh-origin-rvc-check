@@ -7,6 +7,8 @@
 
 # dsh-origin-rvc-check
 
+Current version `0.2.14`.
+
 **Check an origin determination register line by line — RVC arithmetic and declaration fields — and get back a list of what is inconsistent, where, and what to fix.**
 
 A DeepSeek Harness checker for origin-certificate and customs staff: the rule pack never fabricates a citation, it reports only the differences the register itself can mechanically decide, it makes no compliance verdict and assigns no liability, and it never modifies the original.
